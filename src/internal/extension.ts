@@ -40,13 +40,13 @@ class Extension implements IExtension {
     this.initialize();
     this.observeIntersection();
     this.observeMutation();
-    window.addEventListener('keydown', this.handleKeydown);
+    document.addEventListener('keydown', this.handleKeydown);
   }
 
   public deactivate() {
     this.intersectionObserver.disconnect();
     this.mutationObserver.disconnect();
-    window.removeEventListener('keydown', this.handleKeydown);
+    document.removeEventListener('keydown', this.handleKeydown);
     this.dispose();
   }
 
