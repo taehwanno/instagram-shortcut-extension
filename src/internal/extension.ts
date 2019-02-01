@@ -7,6 +7,10 @@ export interface IExtension {
   deactivate(): void;
 }
 
+const ARTICLE = 'ARTICLE';
+const TEXTAREA = 'TEXTAREA';
+const INPUT = 'INPUT';
+
 class Extension implements IExtension {
   container: HTMLElement;
   currentPost: HTMLElement;
@@ -51,7 +55,7 @@ class Extension implements IExtension {
   }
 
   private observeIntersection() {
-    Array.from(this.container.querySelectorAll('article')).map(article =>
+    Array.from(this.container.querySelectorAll(ARTICLE)).map(article =>
       this.intersectionObserver.observe(article),
     );
   }
@@ -72,13 +76,33 @@ class Extension implements IExtension {
   @bind
   private handleMutation(mutations: MutationRecord[]) {
     mutations
-      .filter(mutationRecord => mutationRecord.addedNodes)
+      .filter(mutationRecord => mutationRecord.addedNodes.length !== 0)
       .map(mutationRecord => Array.from(mutationRecord.addedNodes))
       .reduce((arr, addedNodes) => arr.concat(addedNodes), [])
       .map(nodeToHtmlElement)
+      // It only observes posts and does not care about other elements.
+      .filter(element => element.tagName === ARTICLE)
       .map(element => {
         this.intersectionObserver.observe(element);
       });
+  }
+
+  private selectCurrentPost(isDown: boolean) {
+    if (!this.currentPost) {
+      return null;
+    }
+
+    const key = isDown ? 'nextElementSibling' : 'previousElementSibling';
+    let newCurrentPost = this.currentPost[key] as HTMLElement;
+
+    // If the sibling is not a posting, it looks for the next sibling.
+    if (newCurrentPost && newCurrentPost.tagName !== ARTICLE) {
+      newCurrentPost = newCurrentPost[key] as HTMLElement;
+    }
+
+    if (newCurrentPost) {
+      this.currentPost = newCurrentPost;
+    }
   }
 
   @bind
@@ -89,23 +113,19 @@ class Extension implements IExtension {
       srcElement: { tagName },
     } = event;
 
-    if (repeat || tagName === 'TEXTAREA' || tagName === 'INPUT') {
+    if (repeat || tagName === TEXTAREA || tagName === INPUT) {
       return;
     }
 
     switch (key) {
       case 'j': // Next
-        this.currentPost =
-          (this.currentPost && (this.currentPost.nextElementSibling as HTMLElement)) ||
-          this.currentPost;
+        this.selectCurrentPost(true);
         break;
       case 'k': // Previous
-        this.currentPost =
-          (this.currentPost && (this.currentPost.previousElementSibling as HTMLElement)) ||
-          this.currentPost;
+        this.selectCurrentPost(false);
         break;
       default:
-        return;
+        break;
     }
 
     if (this.currentPost) {
