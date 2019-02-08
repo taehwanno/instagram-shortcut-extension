@@ -1,14 +1,14 @@
 const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
+const ChromeExtensionReloaderPlugin = require('webpack-chrome-extension-reloader');
 const CleanPlugin = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
-const WriteFilePlugin = require('write-file-webpack-plugin');
 
-module.exports = {
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+const config = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
-    popup: path.join(__dirname, './src/popup.ts'),
     background: path.join(__dirname, './src/background.ts'),
     'content-script': path.join(__dirname, './src/content-script.ts'),
   },
@@ -32,21 +32,20 @@ module.exports = {
     new CleanPlugin(['dist']),
     new EnvironmentPlugin(['NODE_ENV']),
     new CopyPlugin([{ context: path.join(__dirname, 'public'), from: '**/*' }]),
-    new HtmlPlugin({
-      template: path.join(__dirname, './src/html', 'popup.html'),
-      filename: 'popup.html',
-      chunks: ['popup'],
-    }),
-    new HtmlPlugin({
-      template: path.join(__dirname, './src/html', 'options.html'),
-      filename: 'options.html',
-      chunks: ['options'],
-    }),
-    new HtmlPlugin({
-      template: path.join(__dirname, './src/html', 'background.html'),
-      filename: 'background.html',
-      chunks: ['background'],
-    }),
-    new WriteFilePlugin(),
-  ],
+    isDevelopment &&
+      new ChromeExtensionReloaderPlugin({
+        port: 8080,
+        reloadPage: true,
+        entries: {
+          contentScript: 'content-script',
+          background: 'background',
+        },
+      }),
+  ].filter(Boolean),
 };
+
+if (isDevelopment) {
+  config.devtool = 'inline-source-map';
+}
+
+module.exports = config;
