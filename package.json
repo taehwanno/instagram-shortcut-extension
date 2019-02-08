@@ -10,7 +10,6 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack --watch",
     "build": "cross-env NODE_ENV=production webpack",
-    "prepublish": "npm run build",
     "prettier": "prettier --write \"src/**/*\"",
     "test": "jest",
     "test:coverage": "jest --coverage",
