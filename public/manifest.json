@@ -7,7 +7,7 @@
   "minimum_chrome_version": "58",
   "content_scripts": [
     {
-      "matches": ["https://www.instagram.com/"],
+      "matches": ["https://www.instagram.com/*"],
       "run_at": "document_idle",
       "js": ["content-script.js"]
     }

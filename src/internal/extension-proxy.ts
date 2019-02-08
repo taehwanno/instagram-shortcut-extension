@@ -2,8 +2,6 @@ import bind from './bind';
 import Extension, { IExtension } from './extension';
 import postElement from './post-element';
 
-const timeout = 2000;
-
 class ExtensionProxy implements IExtension {
   private executionCount: number;
   private extension: Extension;
@@ -17,7 +15,7 @@ class ExtensionProxy implements IExtension {
 
   public activate() {
     if (!this.isActivated) {
-      window.requestIdleCallback(this.handleActivate, { timeout });
+      window.requestIdleCallback(this.handleActivate);
     }
   }
 
@@ -34,7 +32,9 @@ class ExtensionProxy implements IExtension {
       this.isActivated = true;
       this.extension.activate();
     } else {
-      window.requestIdleCallback(this.handleActivate, { timeout });
+      setTimeout(() => {
+        window.requestIdleCallback(this.handleActivate);
+      }, 1000);
     }
   }
 

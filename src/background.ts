@@ -11,12 +11,8 @@ const URL = 'https://www.instagram.com/';
  * @see https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs
  */
 chrome.webNavigation.onCompleted.addListener(
-  () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      for (let tab of tabs) {
-        chrome.tabs.sendMessage(tab.id, { command: 'activate' } as ExtensionOneOffMessageEvent);
-      }
-    });
+  details => {
+    chrome.tabs.sendMessage(details.tabId, { command: 'activate' } as ExtensionOneOffMessageEvent);
   },
   {
     url: [{ urlEquals: URL }],
@@ -35,12 +31,8 @@ chrome.webNavigation.onCompleted.addListener(
  */
 chrome.webNavigation.onHistoryStateUpdated.addListener(
   details => {
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      for (let tab of tabs) {
-        const command = details.url === URL ? 'activate' : 'deactivate';
-        chrome.tabs.sendMessage(tab.id, { command } as ExtensionOneOffMessageEvent);
-      }
-    });
+    const command = details.url === URL ? 'activate' : 'deactivate';
+    chrome.tabs.sendMessage(details.tabId, { command } as ExtensionOneOffMessageEvent);
   },
   {
     url: [{ hostEquals: 'www.instagram.com', schemes: ['https'] }],

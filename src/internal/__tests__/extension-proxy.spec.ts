@@ -3,6 +3,7 @@ import ExtensionProxy from '../extension-proxy';
 import postElement from '../post-element';
 
 jest.mock('../extension');
+jest.useFakeTimers();
 
 describe('extension-proxy', () => {
   const MockExtension = Extension as jest.Mock<Extension>;
@@ -52,8 +53,9 @@ describe('extension-proxy', () => {
     it('should repeatedly execute activation step but not infinitely', () => {
       const extensionProxy = new ExtensionProxy();
       extensionProxy.activate();
+      jest.runAllTimers();
       const callCount = requestIdleCallback.mock.calls.length;
-      expect(callCount).toBeGreaterThan(10);
+      expect(callCount).toBeGreaterThan(30);
       expect(callCount).toBeLessThan(100);
     });
   });
