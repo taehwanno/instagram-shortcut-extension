@@ -125,7 +125,7 @@ class Extension implements IExtension {
         this.selectCurrentPost(false);
         break;
       default:
-        break;
+        return;
     }
 
     if (this.currentPost) {
