@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: ~/instagram-shortcut-extension
     docker:
-      - image: circleci/node:10.15.0
+      - image: circleci/node:10.15.0-browsers
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +20,10 @@ jobs:
           name: Build
           command: npm run build
       - run:
-          name: Test
-          command: npm run test:coverage
+          name: Unit Test
+          command: npm t -- --coverage
+      - run:
+          name: E2E Test
+          command: npm run e2e
       - store_artifacts:
           path: coverage
