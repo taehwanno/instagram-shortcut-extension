@@ -22,9 +22,9 @@ chrome.webNavigation.onCompleted.addListener(
 /**
  * Instagram Web Application is based on SPA (Single Page Application) with React-Router.
  * This use History API for client-side routing. So, after the first loading of JavaScript files,
- * The events like onDOMContentLoaded, onCompleted is not dispatched. Because of this extension
+ * The events like onDOMContentLoaded, onCompleted is not dispatched. Because this extension
  * need to be executed in only https://www.instagram.com/, commands like 'activate', 'deactivate'
- * are sent to client script in the browser extension.
+ * are sent to content script in the browser extension.
  *
  * For webNavigation and the sequense of events,
  * @see https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webNavigation
