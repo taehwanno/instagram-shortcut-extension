@@ -16,5 +16,11 @@
     "scripts": ["background.js"],
     "persistent": false
   },
-  "permissions": ["tabs", "webNavigation"]
+  "permissions": ["tabs", "webNavigation"],
+  "icons": {
+    "48": "icon-48x48.png",
+    "96": "icon-96x96.png",
+    "128": "icon-128x128.png",
+    "256": "icon-256x256.png"
+  }
 }
