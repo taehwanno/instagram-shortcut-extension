@@ -17,6 +17,9 @@ jobs:
           paths:
             - ./node_modules
       - run:
+          name: Prettier
+          command: npm run prettier:check
+      - run:
           name: Build
           command: npm run build
       - run:
