@@ -108,7 +108,7 @@ class Extension implements IExtension {
   @bind
   private handleKeydown(event: KeyboardEvent) {
     const {
-      key,
+      code,
       repeat,
       srcElement: { tagName },
     } = event;
@@ -117,11 +117,11 @@ class Extension implements IExtension {
       return;
     }
 
-    switch (key) {
-      case 'j': // Next
+    switch (code) {
+      case 'KeyJ': // Next
         this.selectCurrentPost(true);
         break;
-      case 'k': // Previous
+      case 'KeyK': // Previous
         this.selectCurrentPost(false);
         break;
       default:
