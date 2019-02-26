@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="5" failures="0" time="3.712">
+  <testsuite name="extension-proxy" errors="0" failures="0" skipped="0" timestamp="2019-02-26T03:12:41" time="2.698" tests="4">
+    <testcase classname="extension-proxy when post element exist in DOM should activate extension" name="extension-proxy when post element exist in DOM should activate extension" time="0.015">
+    </testcase>
+    <testcase classname="extension-proxy when post element exist in DOM should deactivate extension when extension is already activated" name="extension-proxy when post element exist in DOM should deactivate extension when extension is already activated" time="0.001">
+    </testcase>
+    <testcase classname="extension-proxy when post element exist in DOM should not deactivate extension when extension is not activated" name="extension-proxy when post element exist in DOM should not deactivate extension when extension is not activated" time="0.001">
+    </testcase>
+    <testcase classname="extension-proxy when post element not exist in DOM should repeatedly execute activation step but not infinitely" name="extension-proxy when post element not exist in DOM should repeatedly execute activation step but not infinitely" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="bind" errors="0" failures="0" skipped="0" timestamp="2019-02-26T03:12:43" time="0.106" tests="1">
+    <testcase classname="bind should be class instance" name="bind should be class instance" time="0.002">
+    </testcase>
+  </testsuite>
+</testsuites>

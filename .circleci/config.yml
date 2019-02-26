@@ -20,10 +20,57 @@ jobs:
           name: Build
           command: npm run build
       - run:
+          name: Packaging
+          command: npm run package
+      - run:
           name: Unit Test
-          command: npm t -- --coverage
+          environment:
+            JEST_JUNIT_OUTPUT: 'test-results/junit/js-unit-test-results.xml'
+          command: npm t -- --ci --coverage --reporters=default --reporters=jest-junit
+      - store_test_results:
+          path: test-results
       - run:
           name: E2E Test
           command: npm run e2e
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+      - store_artifacts:
+          path: dist
+      - store_artifacts:
+          path: out
       - store_artifacts:
           path: coverage
+
+  deploy:
+    working_directory: ~/instagram-shortcut-extension
+    docker:
+      - image: circleci/node:10.15.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: workspace
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - deploy:
+          command: |
+            cd workspace
+            npm run release:cws
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
