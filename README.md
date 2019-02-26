@@ -12,8 +12,10 @@
 
 ## Feature
 
-- <kbd>J</kbd> : Move to next post
-- <kbd>K</kbd> : Move to previous post
+Please press the keyboard key below.
+
+- <kbd>j</kbd> : Move to next post
+- <kbd>k</kbd> : Move to previous post
 
 ## License
 
