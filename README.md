@@ -1,7 +1,3 @@
-<p align="center">
-  <img width="150" height="150" src="https://user-images.githubusercontent.com/7760903/53390471-9a898880-39d6-11e9-8295-7724a2409014.png" />
-</p>
-
 # instagram-shortcut-extension [![CircleCI](https://circleci.com/gh/taehwanno/instagram-shortcut-extension.svg?style=shield&circle-token=8e4f1066dc815c695535ba4c4c7fbc12bb270163)](https://circleci.com/gh/taehwanno/instagram-shortcut-extension)
 
 > Instagram keyboard shortcut extension
