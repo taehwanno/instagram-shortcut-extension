@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Instagram Shortcut Extension",
   "description": "Instagram Keyboard Shortcut Extension",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "homepage_url": "https://github.com/taehwanno/instagram-shortcut-extension",
   "minimum_chrome_version": "58",
   "content_scripts": [

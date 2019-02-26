@@ -1,7 +1,7 @@
 {
   "name": "instagram-shortcut-extension",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "instagram-shortcut-extension",
   "main": "index.js",
   "author": "Taehwan Noh <taehwanno.dev@gmail.com>",
